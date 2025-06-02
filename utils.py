@@ -8,7 +8,9 @@ def fetch_article_as_epub(url):
     article.download()
     article.parse()
 
-    title = article.title or "Untitled"
+    title = article.title.strip() if article.title else "無標題文章"
+    content = article.text.strip() if article.text else "（⚠ 抱歉，這篇文章無法正確解析內容）"
+
     file_name = f"shellyread_{uuid.uuid4().hex}.epub"
     file_path = os.path.join("/tmp", file_name)
 
@@ -18,7 +20,7 @@ def fetch_article_as_epub(url):
     book.set_language("zh")
 
     chapter = epub.EpubHtml(title=title, file_name="chap.xhtml", lang="zh")
-    chapter.content = f"<h1>{title}</h1>" + article.text.replace('\n', '<br>')
+    chapter.content = f"<h1>{title}</h1><p>{content.replace(chr(10), '<br>')}</p>"
 
     book.add_item(chapter)
     book.spine = ['nav', chapter]
