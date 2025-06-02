@@ -3,6 +3,7 @@ from utils import fetch_article_as_epub
 from mailer import send_to_kindle
 import os
 
+print("🔧 Flask app is starting...")
 app = Flask(__name__)
 app.secret_key = os.getenv("FLASK_SECRET", "shellysecret")
 
@@ -24,5 +25,6 @@ def index():
         return redirect(url_for('index'))
     return render_template('index.html')
 
+print("🚀 Running app with debug=True, host='0.0.0.0'")
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
