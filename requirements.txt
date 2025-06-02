@@ -3,3 +3,4 @@ requests
 beautifulsoup4
 newspaper3k
 python-dotenv
+lxml[html_clean]
